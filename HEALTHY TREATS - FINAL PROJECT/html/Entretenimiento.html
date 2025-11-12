@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Healthy Treats - Entretenimiento</title>
+  <link rel="icon" type="image/png" href="../imagenes/logo.png">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
+ <!-- JS -->
+  <script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script defer src="../JS/footer.js"></script>
+  <script defer src="../JS/navbar.js"></script>
+
+
+  <!-- Icono -->
+  <link rel="icon" type="image/png" href="../imagenes/logo.png">
+
+  <style>
+    /* ---------- Base ---------- */
+    :root {
+      --card-bg: #fff8f5;
+      --accent: #f8b195;
+      --accent-strong: #f67280;
+    }
+
+    .page-header {
+      background: #212529;
+      color: #fff;
+      padding: 2.25rem 0;
+      text-align: center;
+    }
+
+    /* Game box: diseño consistente */
+    .game-box {
+      background: var(--card-bg);
+      border-radius: 18px;
+      padding: 22px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+      width: 95%;
+      max-width: 900px;
+      margin: 28px auto;
+      font-family: 'Poppins', sans-serif;
+      text-align: center;
+    }
+
+    .game-box h4 { margin-bottom: 8px; }
+    .game-box p.lead { margin-bottom: 14px; color: #555; }
+
+    input.form-control {
+      border: 2px solid var(--accent);
+      border-radius: 10px;
+      text-align: center;
+    }
+    input.form-control:focus {
+      outline: none;
+      border-color: var(--accent-strong);
+      box-shadow: 0 0 6px rgba(246,114,128,0.12);
+    }
+
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .correcto { color: #28a745; }
+    .incorrecto { color: #dc3545; }
+
+    /* Tablero de memoria */
+    .tablero {
+      display: grid;
+      justify-content: center;
+      gap: 10px;
+      margin: 18px auto;
+      width: fit-content;
+      min-height: 120px;
+    }
+    .mem-carta {
+      width: 70px;
+      height: 70px;
+      font-size: 32px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 2px solid var(--accent);
+      background-color: #fff0f0;
+      transition: transform 0.2s, background-color 0.2s;
+    }
+    .mem-carta:hover { transform: scale(1.05); }
+    .mem-revelada { background-color: #ffe5d9 !important; }
+    .mem-acertada { background-color: #b5ead7 !important; border-color: #9de0ad; }
+
+    /* Layout helper for canvas centering (if needed) */
+    .game-container { display:flex; justify-content:center; align-items:center; }
+
+  </style>
+</head>
+<body>
+  <!-- Encabezado -->
+  <header style="background-color: #C89656; color: white; padding: 100px 0 60px 0; text-align: center;">
+    <h1 style="font-weight: 800; font-size: 3rem; letter-spacing: 1px;">
+      🎮 Entretenimiento
+    </h1>
+    <p class="lead mt-3" style="font-weight: 600; font-size: 1.3rem;">
+      <span style="color: #fff7e6; font-weight: 700;">Diviértete</span> con juegos sencillos y actividades interactivas que pondrán a prueba tus conocimientos sobre 
+      <span style="color: #6B2C00; background-color: #fff7e6; padding: 2px 8px; border-radius: 8px;">vida saludable</span>
+    </p>
+  </header>
+
+  <div class="container">
+
+    <!-- ========== Juego 1: Adivina el número (prefijo num-) ========== -->
+    <div class="game-box" id="num-game-box">
+      <h4>🔢 Adivina el Número - Healthy Mind</h4>
+      <p class="lead">Selecciona un nivel para comenzar:</p>
+
+      <div id="num-menu" class="mb-3">
+        <button class="btn btn-success m-1" id="num-btn-facil" onclick="stopAllGames(); num_iniciarJuego(100,'Fácil')">Fácil</button>
+        <button class="btn btn-warning m-1" id="num-btn-medio" onclick="stopAllGames(); num_iniciarJuego(1000,'Medio')">Medio</button>
+        <button class="btn btn-danger m-1" id="num-btn-dificil" onclick="stopAllGames(); num_iniciarJuego(10000,'Difícil')">Difícil</button>
+      </div>
+
+      <div id="num-juego" style="display:none;">
+        <p id="num-indicacion" class="fw-bold"></p>
+        <input type="number" id="num-input" class="form-control w-25 mx-auto" placeholder="Tu número...">
+        <div class="mt-3">
+          <button class="btn btn-primary" id="num-probar" onclick="num_adivinar()">Probar</button>
+          <button class="btn btn-secondary ms-2" onclick="num_reiniciar()">Reiniciar</button>
+        </div>
+        <p id="num-resultado" class="mt-3 fw-bold"></p>
+      </div>
+
+      <p id="num-final" class="mt-3 fw-bold"></p>
+    </div>
+
+    <!-- ========== Juego 2: Preguntas Rápidas (prefijo quiz-) ========== -->
+    <div class="game-box" id="quiz-game-box">
+      <h4>💡 Preguntas Rápidas - Healthy Quiz</h4>
+      <p class="lead">Selecciona un nivel para comenzar:</p>
+
+      <div id="quiz-menu" class="mb-3">
+        <button class="btn btn-success m-1" onclick="stopAllGames(); quiz_iniciarNivel('facil')">Fácil</button>
+        <button class="btn btn-warning m-1" onclick="stopAllGames(); quiz_iniciarNivel('medio')">Medio</button>
+        <button class="btn btn-danger m-1" onclick="stopAllGames(); quiz_iniciarNivel('dificil')">Difícil</button>
+      </div>
+
+      <div id="quiz-box" style="display:none;">
+        <p id="quiz-contador" class="fw-bold"></p>
+        <p id="quiz-pregunta" class="fw-bold fs-5"></p>
+        <input type="text" id="quiz-respuesta" class="form-control w-50 mx-auto" placeholder="Tu respuesta...">
+        <p id="quiz-feedback" class="fw-bold mt-2"></p>
+        <button class="btn btn-primary mt-2" id="quiz-btnResponder" onclick="quiz_verificarRespuesta()">Responder</button>
+        <button class="btn btn-secondary mt-2 ms-2" id="quiz-btnSiguiente" onclick="quiz_siguientePregunta()" disabled>Siguiente</button>
+      </div>
+
+      <p id="quiz-resultadoFinal" class="mt-3 fw-bold"></p>
+    </div>
+
+    <!-- ========== Juego 3: Memoria (prefijo mem-) ========== -->
+    <div class="game-box" id="mem-game-box">
+      <h4>🧠 Adivina adivinador - Healthy Treats</h4>
+      <p class="lead">Selecciona un nivel para comenzar:</p>
+
+      <div id="mem-menu" class="mb-3">
+        <button class="btn btn-success m-1" onclick="stopAllGames(); mem_iniciarJuego(9, 3)">Fácil</button>
+        <button class="btn btn-warning m-1" onclick="stopAllGames(); mem_iniciarJuego(18, 6)">Medio</button>
+        <button class="btn btn-danger m-1" onclick="stopAllGames(); mem_iniciarJuego(27, 9)">Difícil</button>
+      </div>
+
+      <div id="mem-tablero" class="tablero" aria-live="polite"></div>
+      <p id="mem-resultado" class="mt-3 fw-bold"></p>
+    </div>
+
+  </div> <!-- /container -->
+
+<!-- 🎮 Juego 4: Atrapa los Postres -->
+<div id="catch-menu" class="game-box text-center">
+  <h4>🧁 Atrapa los Postres</h4>
+  <p class="lead">Selecciona un nivel para comenzar:</p>
+  <button class="btn btn-success" onclick="catch_iniciarJuego('facil')">Fácil</button>
+  <button class="btn btn-warning" onclick="catch_iniciarJuego('medio')">Medio</button>
+  <button class="btn btn-danger" onclick="catch_iniciarJuego('dificil')">Difícil</button>
+</div>
+
+<!-- 🎮 Contenedor del juego -->
+<div id="catch-container" class="game-box text-center d-none">
+  <h4 id="catch-nivel-titulo">🧁 Atrapa los Postres</h4>
+  <canvas id="catch-canvas" width="300" height="400" class="border rounded bg-light mx-auto d-block"></canvas>
+
+  <!-- 📊 Contador debajo del canvas -->
+  <div class="mt-3 fw-bold text-center" id="catch-contador">
+    🍰 Atrapados: 0 / 30 &nbsp; | &nbsp; ❌ Fallados: 0 / 12
+  </div>
+
+  <p id="catch-resultado" class="mt-3 text-center fw-bold"></p>
+</div>
+
+<style>
+  /* 🧁 Estilo igual al de los otros juegos */
+  .game-box {
+    background: #fff8f5;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    width: 95%;
+    max-width: 900px;
+    margin: 40px auto;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  canvas {
+    display: block;
+    margin: 0 auto;
+    background-color: #fffaf7;
+    border: 2px solid #ffb6b9;
+    border-radius: 10px;
+  }
+
+  #catch-contador {
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  @media (max-width: 768px) {
+    canvas {
+      width: 260px;
+      height: 340px;
+    }
+  }
+</style>
+
+<!-- 🎮 Juego 5: Laberinto Healthy Treats -->
+<div id="maze-game-box" class="game-box text-center">
+  <h4>🌀 Laberinto Healthy Treats</h4>
+  <p class="lead">Encuentra la tienda Healthy Treats usando las flechas ⬆️⬇️⬅️➡️. ¡Elige un nivel!</p>
+
+  <div id="maze-menu" class="mb-3">
+    <button class="btn btn-success m-1" onclick="maze_iniciarJuego('facil')">Fácil</button>
+    <button class="btn btn-warning m-1" onclick="maze_iniciarJuego('medio')">Medio</button>
+    <button class="btn btn-danger m-1" onclick="maze_iniciarJuego('dificil')">Difícil</button>
+  </div>
+
+  <div id="maze-container" class="d-none">
+    <canvas id="maze-canvas" class="border rounded mx-auto d-block"></canvas>
+    <p id="maze-steps" class="mt-2 fw-bold">Pasos: 0</p>
+    <p id="maze-resultado" class="mt-2 fw-bold"></p>
+  </div>
+</div>
+
+<style>
+  #maze-canvas {
+    background-color: #fffaf7;
+    border: 2px solid #ffb6b9;
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+  }
+</style>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ==================== SCRIPTS: cada juego aislado ==================== -->
+  <script>
+  /*************************************************************************
+   * stopAllGames()
+   * - función que intenta detener intervalos/animaciones globales usadas por
+   *   los juegos para evitar que varios se ejecuten a la vez.
+   * - cada juego registra sus identificadores en variables locales (en window)
+   *   para que stopAllGames pueda limpiarlos.
+   ***************************************************************************/
+  function stopAllGames() {
+    // limpiar intervalos si existen
+    if (window._num_intervalo) { clearInterval(window._num_intervalo); window._num_intervalo = null; }
+    if (window._quiz_intervalo) { clearInterval(window._quiz_intervalo); window._quiz_intervalo = null; }
+    if (window._mem_intervalo) { clearInterval(window._mem_intervalo); window._mem_intervalo = null; }
+
+    // cancelar animationFrame para juegos con animaciones de requestAnimationFrame
+    if (window._num_anim) { cancelAnimationFrame(window._num_anim); window._num_anim = null; }
+    if (window._quiz_anim) { cancelAnimationFrame(window._quiz_anim); window._quiz_anim = null; }
+    if (window._mem_anim) { cancelAnimationFrame(window._mem_anim); window._mem_anim = null; }
+
+    // además, restablecer visuales o contenedores si hace falta
+    // (cada juego tendrá su propia función reiniciar para limpiar estado)
+  }
+
+  /* =========================
+     Juego 1: Adivina el número
+     Prefijo num_
+     ========================= */
+  (function(){
+    // Variables locales solo para este bloque
+    let numeroSecreto = 0;
+    let intentos = 0;
+    let maximo = 100;
+    let nivelActual = "";
+    const menu = document.getElementById("num-menu");
+    const juego = document.getElementById("num-juego");
+    const indicacion = document.getElementById("num-indicacion");
+    const resultado = document.getElementById("num-resultado");
+    const input = document.getElementById("num-input");
+    const final = document.getElementById("num-final");
+
+    // Exponer funciones al window para que los botones onClick las llamen
+    window.num_iniciarJuego = function(limite, nivel) {
+      stopAllGames();
+      maximo = limite;
+      nivelActual = nivel;
+      numeroSecreto = Math.floor(Math.random()*limite) + 1;
+      intentos = 0;
+      input.value = "";
+      resultado.textContent = "";
+      final.textContent = "";
+      indicacion.textContent = `Estoy pensando en un número del 1 al ${maximo}.`;
+      menu.style.display = "none";
+      juego.style.display = "block";
+      input.focus();
+    };
+
+    window.num_adivinar = function() {
+      const numero = parseInt(input.value, 10);
+      if (isNaN(numero) || numero < 1 || numero > maximo) {
+        resultado.textContent = `⚠️ Ingresa un número válido entre 1 y ${maximo}.`;
+        resultado.className = "incorrecto";
+        return;
+      }
+      intentos++;
+      if (numero === numeroSecreto) {
+        resultado.textContent = `🎉 ¡Correcto! El número era ${numeroSecreto}. Lo lograste en ${intentos} intentos.`;
+        resultado.className = "correcto";
+        num_finalizar();
+      } else if (numero < numeroSecreto) {
+        resultado.textContent = "📉 Es más alto. Intenta nuevamente.";
+        resultado.className = "incorrecto";
+      } else {
+        resultado.textContent = "📈 Es más bajo. Intenta nuevamente.";
+        resultado.className = "incorrecto";
+      }
+    };
+
+    window.num_reiniciar = function() {
+      // reutiliza el mismo nivel
+      if (nivelActual) num_iniciarJuego(maximo, nivelActual);
+    };
+
+    function num_finalizar() {
+      final.innerHTML = `🏁 ¡Has completado el nivel <b>${nivelActual.toUpperCase()}</b>!<br>
+        <button class="btn btn-primary mt-2" onclick="num_volverMenu()">Volver al menú</button>`;
+      juego.style.display = "none";
+    }
+
+    window.num_volverMenu = function() {
+      menu.style.display = "block";
+      juego.style.display = "none";
+      final.textContent = "";
+    };
+  })();
+
+
+  /* =========================
+     Juego 2: Preguntas Rápidas
+     Prefijo quiz_
+     ========================= */
+  (function(){
+    // Preguntas por nivel (puedes ampliar)
+    const niveles = {
+      facil: [
+        ["¿Cuál es la capital de Perú?", "Lima"],
+        ["¿Cuántos días tiene una semana?", "7"],
+        ["¿Qué gas respiramos los humanos?", "Oxígeno"],
+        ["¿Cuál es el planeta más grande?", "Júpiter"],
+        ["De qué color es el cielo?", "Azul"],
+        ["¿Cuántos continentes hay?", "7"],
+        ["¿Qué número romano representa el 10?", "X"],
+        ["¿Qué planeta es rojo?", "Marte"],
+        ["¿Qué animal es el rey de la selva?", "León"],
+        ["¿Cuántos días tiene un año normal?", "365"]
+      ],
+      medio: [
+        ["¿Cuál es el metal más ligero?", "Litio"],
+        ["¿Cuál es el océano más grande?", "Pacífico"],
+        ["¿Cuánto es 12 x 12?", "144"],
+        ["¿Qué instrumento mide la temperatura?", "Termómetro"],
+        ["¿Cuál es el país más grande del mundo?", "Rusia"],
+        ["¿Qué planeta está más cerca del Sol?", "Mercurio"],
+        ["¿Cuál es el idioma más hablado del mundo?", "Inglés"],
+        ["¿Qué gas usan las plantas para hacer fotosíntesis?", "Dióxido de carbono"],
+        ["¿Cuántos huesos tiene el cuerpo humano adulto?", "206"],
+        ["¿Cuál es el río más largo del mundo?", "Nilo"],
+        ["¿Qué animal pone huevos?", "Ave"],
+        ["¿Cuál es la moneda de Japón?", "Yen"],
+        ["¿En qué continente está Egipto?", "África"],
+        ["¿Cuál es el resultado de 100 ÷ 4?", "25"],
+        ["¿Cuál es el planeta más cercano a la Tierra?", "Venus"],
+        ["¿Qué planeta tiene anillos?", "Saturno"],
+        ["¿Cuántos lados tiene un hexágono?", "6"],
+        ["¿Qué gas es inflamable y ligero?", "Hidrógeno"],
+        ["¿Qué animal produce leche?", "Vaca"],
+        ["¿Qué país inventó la pizza?", "Italia"],
+        ["¿Cuál es el idioma oficial de Brasil?", "Portugués"],
+        ["¿Qué órgano bombea la sangre?", "Corazón"],
+        ["¿Qué mamífero vive en el mar?", "Ballena"],
+        ["¿Cuál es el continente más frío?", "Antártida"],
+        ["¿Qué número romano representa el 5?", "V"]
+      ],
+      dificil: []
+    };
+
+    // Genera 50 preguntas placeholder para difícil (puedes reemplazar)
+    for (let i=1;i<=50;i++){
+      niveles.dificil.push([`Pregunta número ${i}: ¿Cuál es la respuesta?`, "Respuesta"]);
+    }
+
+    // Estado del juego
+    let preguntas = [];
+    let indice = 0;
+    let puntaje = 0;
+    let nivelActual = "";
+
+    // Elementos DOM
+    const quizMenuEl = document.getElementById("quiz-menu");
+    const quizBoxEl = document.getElementById("quiz-box");
+    const preguntaEl = document.getElementById("quiz-pregunta");
+    const respuestaEl = document.getElementById("quiz-respuesta");
+    const feedbackEl = document.getElementById("quiz-feedback");
+    const contadorEl = document.getElementById("quiz-contador");
+    const resultadoFinalEl = document.getElementById("quiz-resultadoFinal");
+    const btnSiguiente = document.getElementById("quiz-btnSiguiente");
+    const btnResponder = document.getElementById("quiz-btnResponder");
+
+    window.quiz_iniciarNivel = function(nivel) {
+      stopAllGames();
+      nivelActual = nivel;
+      preguntas = niveles[nivel].slice(); // copia
+      indice = 0;
+      puntaje = 0;
+      resultadoFinalEl.innerHTML = "";
+      quizMenuEl.style.display = "none";
+      quizBoxEl.style.display = "block";
+      mostrarPregunta();
+      respuestaEl.focus();
+    };
+
+    function mostrarPregunta() {
+      const [texto] = preguntas[indice];
+      preguntaEl.textContent = texto;
+      contadorEl.textContent = `Pregunta ${indice+1} de ${preguntas.length}`;
+      respuestaEl.value = "";
+      feedbackEl.textContent = "";
+      btnSiguiente.disabled = true;
+      btnResponder.disabled = false;
+    }
+
+    window.quiz_verificarRespuesta = function() {
+      const respuesta = respuestaEl.value.trim().toLowerCase();
+      const correcta = preguntas[indice][1].toLowerCase();
+
+      if (respuesta === "") {
+        feedbackEl.textContent = "⚠️ Escribe una respuesta antes de continuar.";
+        feedbackEl.className = "incorrecto";
+        btnSiguiente.disabled = true;
+        return;
+      }
+
+      if (respuesta === correcta) {
+        feedbackEl.textContent = "✅ ¡Correcto!";
+        feedbackEl.className = "correcto";
+        puntaje++;
+      } else {
+        feedbackEl.textContent = `❌ Incorrecto. Era: ${preguntas[indice][1]}`;
+        feedbackEl.className = "incorrecto";
+      }
+
+      btnSiguiente.disabled = false;
+      btnResponder.disabled = true;
+    };
+
+    window.quiz_siguientePregunta = function() {
+      if (indice < preguntas.length - 1) {
+        indice++;
+        mostrarPregunta();
+      } else {
+        quiz_mostrarResultado();
+      }
+    };
+
+    function quiz_mostrarResultado() {
+      quizBoxEl.style.display = "none";
+      resultadoFinalEl.innerHTML = `
+        🎉 ¡Completaste el nivel <b>${nivelActual.toUpperCase()}</b>!<br>
+        Tu puntaje: <b>${puntaje}/${preguntas.length}</b><br>
+        <button class="btn btn-primary mt-3" onclick="quiz_volverMenu()">Volver al menú</button>
+      `;
+    }
+
+    window.quiz_volverMenu = function() {
+      quizMenuEl.style.display = "block";
+      resultadoFinalEl.innerHTML = "";
+    };
+
+    // opcional: permitir pulsar Enter en el input para verificar
+    respuestaEl.addEventListener("keydown", function(e){
+      if (e.key === "Enter") {
+        e.preventDefault();
+        if (!btnResponder.disabled) quiz_verificarRespuesta();
+      }
+    });
+  })();
+
+
+  /* =========================
+     Juego 3: Memoria
+     Prefijo mem_
+     ========================= */
+  (function(){
+    const emojisBase = [
+      "🍎","🍌","🍇","🍓","🍉","🍒","🍋","🥝","🍍",
+      "🍑","🥥","🥭","🍰","🧁","🍪","🍩","🍫","🍦",
+      "🍧","🍨","🍯","🥞","🧇","🍬","🍈","🍔","🍕",
+      "🌮","🥗","🍿","🍱","🍣","🥪","🥯","🍜","🍤",
+      "🥖","🍙","🥒","🥕","🌽","🍠","🥚","🧀","🥩"
+    ];
+
+    let cartas = [];
+    let seleccionadas = [];
+    let aciertos = 0;
+    let totalPares = 0;
+
+    const tablero = document.getElementById("mem-tablero");
+    const resultado = document.getElementById("mem-resultado");
+    const menu = document.getElementById("mem-menu");
+
+    // iniciarJuego para memoria: pares = número de pares, columnas = número de columnas del grid
+    window.mem_iniciarJuego = function(pares, columnas) {
+      stopAllGames();
+      totalPares = pares;
+      // tomar primeros 'pares' emojis y duplicar
+      const seleccion = emojisBase.slice(0, pares);
+      cartas = [...seleccion, ...seleccion];
+      cartas.sort(() => Math.random() - 0.5);
+
+      tablero.innerHTML = "";
+      resultado.innerText = "";
+      seleccionadas = [];
+      aciertos = 0;
+
+      tablero.style.gridTemplateColumns = `repeat(${columnas}, 1fr)`;
+      menu.style.display = "none";
+
+      // generar botones
+      cartas.forEach((emoji, idx) => {
+        const btn = document.createElement("button");
+        btn.className = "mem-carta";
+        btn.type = "button";
+        btn.textContent = "❓";
+        btn.setAttribute("data-valor", emoji);
+        btn.setAttribute("aria-label", "carta de memoria");
+        btn.addEventListener("click", () => mem_voltear(btn));
+        tablero.appendChild(btn);
+      });
+      // focus to container for accessibility
+      tablero.focus();
+    };
+
+    window.mem_voltear = function(carta) {
+      if (carta.classList.contains("mem-revelada") || carta.classList.contains("mem-acertada") || seleccionadas.length === 2) return;
+
+      carta.textContent = carta.dataset.valor;
+      carta.classList.add("mem-revelada");
+      seleccionadas.push(carta);
+
+      if (seleccionadas.length === 2) {
+        const [a,b] = seleccionadas;
+        if (a.dataset.valor === b.dataset.valor) {
+          // deja ver un instante y marca como acertada
+          setTimeout(() => {
+            a.classList.add("mem-acertada");
+            b.classList.add("mem-acertada");
+            seleccionadas = [];
+            aciertos++;
+            if (aciertos === totalPares) {
+              resultado.innerHTML = `🎉 ¡Completaste el nivel! 🎉<br><button class='btn btn-primary mt-2' onclick="mem_mostrarMenu()">Volver al menú</button>`;
+            }
+          }, 400);
+        } else {
+          // no coinciden: voltearlas después de 800ms
+          setTimeout(() => {
+            a.textContent = "❓";
+            b.textContent = "❓";
+            a.classList.remove("mem-revelada");
+            b.classList.remove("mem-revelada");
+            seleccionadas = [];
+          }, 800);
+        }
+      }
+    };
+
+    window.mem_mostrarMenu = function() {
+      tablero.innerHTML = "";
+      resultado.innerHTML = "";
+      menu.style.display = "block";
+    };
+  })();
+
+/* =========================
+   🎮 Juego 4: Atrapa los Postres
+   ========================= */
+(function(){
+  const canvas = document.getElementById("catch-canvas");
+  const ctx = canvas.getContext("2d");
+  const contenedor = document.getElementById("catch-container");
+  const menu = document.getElementById("catch-menu");
+  const resultado = document.getElementById("catch-resultado");
+  const contador = document.getElementById("catch-contador");
+  const tituloNivel = document.getElementById("catch-nivel-titulo");
+
+  const postres = ["🧁","🍰","🍩","🍪","🍫","🍦","🍬","🍨"];
+  const trampas = ["💣","🪨","🐍","👻","☠️","💀","⚡"];
+
+  let jugador, caidas, atrapados, velocidadCaida, frecuencia, lloviendo, nivelActual, fallados;
+
+  // Iniciar juego
+  window.catch_iniciarJuego = function(nivel){
+    nivelActual = nivel;
+    menu.classList.add("d-none");
+    contenedor.classList.remove("d-none");
+    resultado.textContent = "";
+    atrapados = 0;
+    fallados = 0;
+
+    // ⚙️ Configurar velocidad según nivel
+    if (nivel === "facil") {
+      velocidadCaida = 1;
+      frecuencia = 0.018;
+    } else if (nivel === "medio") {
+      velocidadCaida = 3;
+      frecuencia = 0.035;
+    } else {
+      velocidadCaida = 5;
+      frecuencia = 0.055;
+    }
+
+    tituloNivel.innerHTML = `🧁 Atrapa los Postres - Nivel ${nivel.charAt(0).toUpperCase() + nivel.slice(1)}`;
+    jugador = { x: canvas.width / 2 - 30, y: canvas.height - 50, ancho: 60, alto: 30 };
+    caidas = [];
+    lloviendo = true;
+    actualizarContador();
+    window._catch_anim = requestAnimationFrame(catch_dibujar);
+  };
+
+  // Crear nuevo objeto que cae
+  function catch_crearCaida(){
+    const esPostre = Math.random() < 0.8;
+    const emoji = esPostre
+      ? postres[Math.floor(Math.random() * postres.length)]
+      : trampas[Math.floor(Math.random() * trampas.length)];
+    return {
+      emoji,
+      x: Math.random() * (canvas.width - 40),
+      y: -30,
+      velocidad: velocidadCaida + Math.random() * 1.5,
+      esPostre
+    };
+  }
+
+  // Dibujar y actualizar
+  function catch_dibujar(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("🍽️", jugador.x + jugador.ancho / 2, jugador.y + 25);
+
+    if (Math.random() < frecuencia) caidas.push(catch_crearCaida());
+
+    for (let i = caidas.length - 1; i >= 0; i--) {
+      const c = caidas[i];
+      ctx.fillText(c.emoji, c.x, c.y);
+      c.y += c.velocidad;
+
+      // Colisión con el plato
+      if (c.y + 20 > jugador.y && c.x > jugador.x - 10 && c.x < jugador.x + jugador.ancho + 10) {
+        if (c.esPostre) {
+          atrapados++;
+        } else {
+          lloviendo = false;
+          mostrarResultado(`💣 ¡Atrapan no saludable! Perdiste.<br>Postres atrapados: ${atrapados}`);
+        }
+        caidas.splice(i, 1);
+        actualizarContador();
+      } else if (c.y > canvas.height) {
+        if (c.esPostre) {
+          fallados++;
+          if (fallados >= 12 && lloviendo) {
+            lloviendo = false;
+            mostrarResultado(`🍰 Dejaste caer 12 postres saludables. Perdiste.<br>Postres atrapados: ${atrapados}`);
+          }
+          actualizarContador();
+        }
+        caidas.splice(i, 1);
+      }
+    }
+
+    if (atrapados >= 30 && lloviendo) {
+      lloviendo = false;
+      mostrarResultado(`🎉 ¡Ganaste el nivel <b>${nivelActual.toUpperCase()}</b>! 🎉<br>Atrápaste ${atrapados} postres 🍰`);
+    }
+
+    if (lloviendo) window._catch_anim = requestAnimationFrame(catch_dibujar);
+  }
+
+  // Mover jugador con flechas
+  window.addEventListener("keydown", (e) => {
+    if (!lloviendo) return;
+    if (e.key === "ArrowLeft" && jugador.x > 0) jugador.x -= 25;
+    if (e.key === "ArrowRight" && jugador.x + jugador.ancho < canvas.width) jugador.x += 25;
+  });
+
+  function mostrarResultado(msg) {
+    resultado.innerHTML = `${msg}<br><button class="btn btn-primary mt-2" onclick="catch_volverMenu()">Volver al menú</button>`;
+  }
+
+  function actualizarContador() {
+    contador.textContent = `🍰 Atrapados: ${atrapados} / 30   |   ❌ Fallados: ${fallados} / 12`;
+  }
+
+  window.catch_volverMenu = function(){
+    cancelAnimationFrame(window._catch_anim);
+    contenedor.classList.add("d-none");
+    menu.classList.remove("d-none");
+    resultado.textContent = "";
+    caidas = [];
+  };
+})();
+
+(function(){
+  const canvas = document.getElementById("maze-canvas");
+  const ctx = canvas.getContext("2d");
+  const contenedor = document.getElementById("maze-container");
+  const menu = document.getElementById("maze-menu");
+  const resultado = document.getElementById("maze-resultado");
+  const pasosEl = document.getElementById("maze-steps");
+
+  let gridSize, rows, cols, maze, player, goal, wallDensity, stepCount, stepLimit, extraObstacles;
+
+  function generarMaze() {
+    maze = Array.from({length: rows}, () => Array(cols).fill(0));
+
+    // Bordes
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        if(r===0 || r===rows-1 || c===0 || c===cols-1) maze[r][c] = 1;
+      }
+    }
+
+    // Muros aleatorios simples
+    for(let r=1;r<rows-1;r++){
+      for(let c=1;c<cols-1;c++){
+        if(Math.random()<wallDensity && !(r===player.y && c===player.x) && !(r===goal.y && c===goal.x))
+          maze[r][c] = 1;
+      }
+    }
+
+    // Bloques grandes (2x2 o 3x3) para sensación de pasillos
+    for(let i=0;i<extraObstacles;i++){
+      const w = Math.floor(Math.random()*2)+2; // ancho 2 o 3
+      const h = Math.floor(Math.random()*2)+2; // alto 2 o 3
+      const x = Math.floor(Math.random()*(cols-w-2))+1;
+      const y = Math.floor(Math.random()*(rows-h-2))+1;
+      // Evitar jugador y meta
+      if(player.x >= x && player.x < x+w && player.y >= y && player.y < y+h) continue;
+      if(goal.x >= x && goal.x < x+w && goal.y >= y && goal.y < y+h) continue;
+      for(let r=y;r<y+h;r++){
+        for(let c=x;c<x+w;c++){
+          maze[r][c]=1;
+        }
+      }
+    }
+  }
+
+  function drawMaze() {
+    canvas.width = cols*gridSize;
+    canvas.height = rows*gridSize;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    for(let r=0;r<rows;r++){
+      for(let c=0;c<cols;c++){
+        ctx.fillStyle = maze[r][c]===1 ? "#ffb6b9" : "#fffaf7";
+        ctx.fillRect(c*gridSize,r*gridSize,gridSize,gridSize);
+      }
+    }
+
+    // goal
+    ctx.fillStyle="#f8b195";
+    ctx.fillRect(goal.x*gridSize,goal.y*gridSize,gridSize,gridSize);
+    ctx.fillStyle="#fff";
+    ctx.font=`${gridSize}px Arial`;
+    ctx.fillText("🏪", goal.x*gridSize, goal.y*gridSize+gridSize);
+
+    // player
+    ctx.fillStyle="#f67280";
+    ctx.fillRect(player.x*gridSize, player.y*gridSize, gridSize, gridSize);
+    ctx.fillStyle="#fff";
+    ctx.fillText("🧍‍♂️", player.x*gridSize, player.y*gridSize+gridSize);
+  }
+
+  window.maze_iniciarJuego = function(nivel) {
+    menu.classList.add("d-none");
+    contenedor.classList.remove("d-none");
+    resultado.textContent="";
+    stepCount=0;
+
+    switch(nivel){
+      case "facil":
+        gridSize = 20; rows=20; cols=20; wallDensity=0.15; extraObstacles=30; stepLimit=200; break;
+      case "medio":
+        gridSize = 15; rows=40; cols=40; wallDensity=0.25; extraObstacles=150; stepLimit=600; break;
+      case "dificil":
+        gridSize = 10; rows=75; cols=75; wallDensity=0.35; extraObstacles=500; stepLimit=1500; break;
+    }
+
+    pasosEl.textContent = `Pasos: ${stepCount} / ${stepLimit}`;
+    player = {x:1, y:1};
+    goal = {x:cols-2, y:rows-2};
+
+    generarMaze();
+    drawMaze();
+  }
+
+  function movePlayer(dx,dy){
+    const nx = player.x+dx;
+    const ny = player.y+dy;
+    if(nx>=0 && nx<cols && ny>=0 && ny<rows && maze[ny][nx]===0){
+      player.x=nx;
+      player.y=ny;
+      stepCount++;
+      pasosEl.textContent = `Pasos: ${stepCount} / ${stepLimit}`;
+      drawMaze();
+
+      if(player.x===goal.x && player.y===goal.y){
+        resultado.innerHTML=`🎉 ¡Encontraste la tienda Healthy Treats en ${stepCount} pasos! 🎉<br>
+          <button class="btn btn-primary mt-2" onclick="maze_volverMenu()">Volver al menú</button>`;
+      } else if(stepCount>=stepLimit){
+        resultado.innerHTML=`💥 ¡Te has quedado sin pasos! Intento fallido.<br>
+          <button class="btn btn-primary mt-2" onclick="maze_volverMenu()">Volver al menú</button>`;
+      }
+    }
+  }
+
+  window.maze_volverMenu = function(){
+    contenedor.classList.add("d-none");
+    menu.classList.remove("d-none");
+    pasosEl.textContent = "";
+  }
+
+  window.addEventListener("keydown",(e)=>{
+    switch(e.key){
+      case "ArrowUp": movePlayer(0,-1); break;
+      case "ArrowDown": movePlayer(0,1); break;
+      case "ArrowLeft": movePlayer(-1,0); break;
+      case "ArrowRight": movePlayer(1,0); break;
+    }
+  });
+})();
+
+  // Limpieza final: cuando la página se oculta o el usuario navega, detenemos timers
+  window.addEventListener("beforeunload", function() { stopAllGames(); });
+  </script>
+</body>
+</html>

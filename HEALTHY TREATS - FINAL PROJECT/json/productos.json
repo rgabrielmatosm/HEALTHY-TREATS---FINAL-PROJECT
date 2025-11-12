@@ -1,0 +1,185 @@
+[
+
+  
+  {
+    "id": 1,
+    "nombre": "Torta de Chocolate Clásica",
+    "linea": "Clásica",
+    "categoria": "Tortas",
+    "descripcion": "Esponjosa torta de chocolate con cobertura de ganache y relleno de fudge.",
+    "precio": 42.50,
+    "img": "../imagenes/torta_chocolate.jpg"
+  },
+  {
+    "id": 2,
+    "nombre": "Torta Vegana de Frutas",
+    "linea": "Vegana",
+    "categoria": "Tortas",
+    "descripcion": "Torta elaborada con harina integral, sin lácteos, con frutas naturales y endulzada con panela.",
+    "precio": 48.00,
+    "img": "../imagenes/torta_vegana_frutas.jpg"
+  },
+  {
+    "id": 3,
+    "nombre": "Torta de Zanahoria",
+    "linea": "Clásica",
+    "categoria": "Tortas",
+    "descripcion": "Suave torta de zanahoria con glaseado de queso crema bajo en azúcar.",
+    "precio": 39.90,
+    "img": "../imagenes/torta_zanahoria.jpg"
+  },
+
+  
+  
+  {
+    "id": 4,
+    "nombre": "Cheesecake Clásico",
+    "linea": "Clásica",
+    "categoria": "Postres",
+    "descripcion": "Delicioso cheesecake tradicional con base de galleta y cobertura de frutos rojos.",
+    "precio": 35.50,
+    "img": "../imagenes/cheesecake_clasico.jpg"
+  },
+  {
+    "id": 5,
+    "nombre": "Mini Postres Sin Gluten",
+    "linea": "Sin Gluten",
+    "categoria": "Postres",
+    "descripcion": "Selección de mini postres de vainilla, chocolate y frutos secos aptos para celíacos.",
+    "precio": 20.00,
+    "img": "../imagenes/mini_postres_singluten.jpg"
+  },
+  {
+    "id": 6,
+    "nombre": "Mousse de Maracuyá",
+    "linea": "Clásica",
+    "categoria": "Postres",
+    "descripcion": "Refrescante mousse de maracuyá con base de bizcochuelo ligero y topping de frutas tropicales.",
+    "precio": 28.00,
+    "img": "../imagenes/mousse_maracuya.jpg"
+  },
+
+
+  
+  {
+    "id": 7,
+    "nombre": "Bocaditos de Brownie",
+    "linea": "Clásica",
+    "categoria": "Bocaditos",
+    "descripcion": "Mini brownies con trozos de nuez y chocolate bitter, ideales para eventos o coffee breaks.",
+    "precio": 18.00,
+    "img": "../imagenes/bocaditos_brownie.jpg"
+  },
+  {
+    "id": 8,
+    "nombre": "Empanaditas de Pollo",
+    "linea": "Clásica",
+    "categoria": "Bocaditos",
+    "descripcion": "Empanaditas al horno rellenas de pollo desmenuzado y condimentos naturales.",
+    "precio": 22.00,
+    "img": "../imagenes/empanaditas_pollo.jpg"
+  },
+  {
+    "id": 9,
+    "nombre": "Mini Quiches de Espinaca",
+    "linea": "Clásica",
+    "categoria": "Bocaditos",
+    "descripcion": "Mini quiches con base de masa integral, rellenos de espinaca, huevo y queso bajo en grasa.",
+    "precio": 25.00,
+    "img": "../imagenes/mini_quiches_espinaca.jpg"
+  },
+  {
+    "id": 10,
+    "nombre": "Torta Vegana de Chocolate",
+    "linea": "Vegana",
+    "categoria": "Tortas",
+    "descripcion": "Bizcocho húmedo de cacao elaborado sin huevo ni lácteos, con cobertura de chocolate amargo.",
+    "precio": 45.00,
+    "img": "../imagenes/torta_vegana_chocolate.jpg"
+  },
+  {
+    "id": 11,
+    "nombre": "Torta Vegana de Naranja y Almendra",
+    "linea": "Vegana",
+    "categoria": "Tortas",
+    "descripcion": "Torta ligera de harina integral con jugo natural de naranja y almendras laminadas.",
+    "precio": 47.50,
+    "img": "../imagenes/torta_vegana_naranja.jpg"
+  },
+  {
+    "id": 12,
+    "nombre": "Torta Sin Gluten de Arándanos",
+    "linea": "Sin Gluten",
+    "categoria": "Tortas",
+    "descripcion": "Suave torta de harina de arroz y almendras con arándanos frescos y topping natural.",
+    "precio": 49.90,
+    "img": "../imagenes/torta_singluten_arandanos.jpg"
+  },
+
+
+  {
+    "id": 13,
+    "nombre": "Cheesecake Vegano de Frambuesa",
+    "linea": "Vegana",
+    "categoria": "Postres",
+    "descripcion": "Postre cremoso hecho con base de galleta de avena y crema vegetal, cubierto con frambuesas naturales.",
+    "precio": 36.00,
+    "img": "../imagenes/cheesecake_vegano_frambuesa.jpg"
+  },
+  {
+    "id": 14,
+    "nombre": "Mousse de Cacao Sin Gluten",
+    "linea": "Sin Gluten",
+    "categoria": "Postres",
+    "descripcion": "Mousse suave a base de cacao orgánico y leche de coco, libre de gluten y lácteos.",
+    "precio": 30.00,
+    "img": "../imagenes/mousse_cacao_singluten.jpg"
+  },
+  {
+    "id": 15,
+    "nombre": "Mini Postres Veganos Variados",
+    "linea": "Vegana",
+    "categoria": "Postres",
+    "descripcion": "Selección de mini postres veganos: maracuyá, chocolate y frutos rojos. 100% de origen vegetal.",
+    "precio": 24.00,
+    "img": "../imagenes/mini_postres_veganos.jpg"
+  },
+  {
+    "id": 16,
+    "nombre": "Brownie Sin Gluten",
+    "linea": "Sin Gluten",
+    "categoria": "Postres",
+    "descripcion": "Brownie elaborado con harina de almendra, cacao puro y azúcar de coco, apto para celíacos.",
+    "precio": 22.00,
+    "img": "../imagenes/brownie_singluten.jpg"
+  },
+
+
+  {
+    "id": 17,
+    "nombre": "Bocaditos Energéticos Veganos",
+    "linea": "Vegana",
+    "categoria": "Bocaditos",
+    "descripcion": "Pequeñas bolitas energéticas de avena, dátiles y cacao sin azúcares añadidos.",
+    "precio": 18.50,
+    "img": "../imagenes/bocaditos_veganos.jpg"
+  },
+  {
+    "id": 18,
+    "nombre": "Galletas Sin Gluten de Avena y Pasas",
+    "linea": "Sin Gluten",
+    "categoria": "Bocaditos",
+    "descripcion": "Crujientes galletas sin gluten con avena certificada, pasas y toque de canela.",
+    "precio": 16.00,
+    "img": "../imagenes/galletas_singluten_avena.jpg"
+  },
+  {
+    "id": 19,
+    "nombre": "Mini Muffins Veganos de Plátano",
+    "linea": "Vegana",
+    "categoria": "Bocaditos",
+    "descripcion": "Mini muffins elaborados con puré de plátano y harina integral, sin huevo ni lácteos.",
+    "precio": 19.00,
+    "img": "../imagenes/muffins_veganos_banana.jpg"
+  }
+]
