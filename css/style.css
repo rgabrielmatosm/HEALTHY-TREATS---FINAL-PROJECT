@@ -1,0 +1,604 @@
+/* Reseteo básico */
+.icon {
+    border-radius: 50%;
+}
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+#vic{
+  margin-bottom: 10px;
+  margin-top: 50px;
+}
+
+.imagen-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65px; 
+  background-color: #7b3c1a;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none; 
+}
+
+.timeline div {
+  position: relative;
+  padding-left: 15px;
+  border-left: 3px solid #d4a373;
+  margin-bottom: 10px;
+}
+
+.timeline div::before {
+  content: "";
+  position: absolute;
+  left: -6px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  background-color: #d4a373;
+  border-radius: 50%;
+}
+
+.video-section {
+  position: relative;
+  width: 100%;
+  height: 100vh; /* ocupa el alto visible */
+  overflow: hidden;
+}
+
+.video-section video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* llena el área visible */
+}
+
+@media (max-width: 768px) {
+  .video-section {
+    height: 60vh; /* se achica visualmente en móviles */
+  }
+}
+
+/* ----- Overlay general ----- */
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px; /* margen lateral para que el texto no se corte en móvil */
+}
+
+/* ----- Texto principal ----- */
+.overlay-text {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: white;
+  font-size: 4rem;
+  line-height: 1.2;
+  text-align: center;
+  transition: all 0.3s ease-in-out;
+}
+
+/* ----- Palabra destacada ----- */
+.overlay-text span {
+  color: #D4AF37;
+  font-size: 7vh;
+  font-family: "Fleur De Leah", cursive;
+  display: block; /* permite que aparezca debajo del texto principal */
+}
+
+/* ----- Responsividad ----- */
+@media (max-width: 1200px) {
+  .overlay-text {
+    font-size: 3.5rem;
+  }
+
+  .overlay-text span {
+    font-size: 6vh;
+  }
+}
+
+@media (max-width: 992px) {
+  .overlay-text {
+    font-size: 3rem;
+  }
+
+  .overlay-text span {
+    font-size: 5.5vh;
+  }
+}
+
+@media (max-width: 768px) {
+  .overlay-text {
+    font-size: 2.3rem;
+  }
+
+  .overlay-text span {
+    font-size: 5vh;
+  }
+}
+
+@media (max-width: 576px) {
+  .overlay-text {
+    font-size: 1.8rem;
+  }
+
+  .overlay-text span {
+    font-size: 4.5vh;
+  }
+}
+
+.contenedor-boton {
+  display: flex;
+  justify-content: center; /* centra horizontalmente */
+  align-items: center;     /* opcional: centra verticalmente */
+}
+
+.btn-animado {
+  color: aliceblue;
+  border-radius: 25px;
+  border: #D4AF37 solid;
+  background-color: #5e2d12;
+  width: 120px;
+  height: 40px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.btn-animado:hover {
+    border: none;
+    background-color: #eeba10;
+    transform: translateY(-3px); /* pequeño movimiento */
+    box-shadow: 0 6px 15px rgba(255, 191, 0, 0.705);
+  }
+
+/* Contenido debajo */
+.content {
+  padding: 100px 20px;
+  text-align: center;
+  color: #333;
+}
+
+.categorias-container {
+  display: flex;
+  justify-content: center; /* centra el grupo horizontalmente */
+  align-items: center;
+  flex-wrap: wrap; /* permite que bajen cuando no hay espacio */
+  gap: 20px;
+  padding: 40px 20px;
+}
+
+.categoria {
+  position: relative;
+  width: 100%;
+  max-width: 350px; /* límite máximo en pantallas grandes */
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  border-radius: 10px;
+  overflow: hidden;
+  padding-bottom: 60px;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  margin: 0 auto; /* centrado individual */
+}
+
+.categoria h3 {
+  position: absolute;
+  bottom: 70px; /* encima del botón */
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.6);
+  font-size: 22px;
+  text-align: center;
+}
+
+/* 🔹 Ajustes responsive */
+@media (max-width: 992px) {
+  .categoria {
+    height: 320px;
+    max-width: 300px;
+  }
+
+  .categoria h3 {
+    bottom: 80px; /* más espacio respecto al botón */
+  }
+}
+
+@media (max-width: 768px) {
+  .categoria {
+    height: 280px;
+    max-width: 260px;
+  }
+
+  .categoria h3 {
+    font-size: 18px;
+    bottom: 90px; /* más distancia al achicarse */
+  }
+}
+
+@media (max-width: 576px) {
+  .categoria {
+    height: 240px;
+    max-width: 90%;
+  }
+
+  .categoria h3 {
+    font-size: 16px;
+    bottom: 80px; /* aún más arriba para mantener espacio */
+  }
+}
+
+.btn-ver-todo {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #7b3c1a;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+/* Hover efecto */
+.btn-ver-todo:hover {
+  background-color: #6e2d12;
+}
+
+/* Contenedor de fila: usa flex para alinear columnas en altura iguales */
+.row.equal-height {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Cada columna toma igual altura dentro de la fila flex */
+.row.equal-height > .col-md-4 {
+  display: flex;
+  align-items: stretch;
+}
+
+/* Las cards ocupan toda la altura de la columna y usan flex interno para distribuir contenido */
+.row.equal-height .card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+/* Contenido del card: que el párrafo ocupe el espacio restante si es necesario */
+.row.equal-height .card .text-muted {
+  margin-top: auto;
+}
+
+/* Opcional: asegurar tamaño mínimo para móviles */
+@media (max-width: 767.98px) {
+  .row.equal-height {
+    display: block;
+  }
+  .row.equal-height > .col-md-4 {
+    display: block;
+  }
+}
+
+
+#navbar-container {
+  min-height: 70px; /* o el alto aproximado de tu navbar */
+}
+
+/* Imagen debajo del navbar (no bloquea clics) */
+.imagen-fondo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 65px; 
+  background-color: #5e2d12;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+  pointer-events: none; 
+}
+
+.categoria:hover {
+  filter: brightness(0.9);
+  transform: scale(1.03);
+}
+
+main {
+  flex: 1; 
+}
+
+#Panel1{
+  background-color: #AFF8DB;
+}
+#Panel2{
+  background-color: #FFAABB;
+}
+#Panel3{
+  background-color: #AA79AF;
+}
+
+.site-footer {
+  background-color: #222;
+  color: #eee;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 14px;
+  width: 100%;
+}
+
+/* === CONTENEDOR PRINCIPAL === */
+.rowLineas {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 40px;
+  padding: 40px;
+  transition: background-color 0.6s ease;
+  background-color: #ffcaca;
+}
+
+.col-6 {
+  flex: 1;
+}
+
+/* Centrar imágenes en su columna */
+.col-6.scroll-images {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 20px;
+}
+
+.LargeImage {
+  display: flex;
+  width: 100%;
+  max-width: 450px;
+  height: 520px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 60px;
+  transition: transform 0.4s ease;
+}
+
+.LargeImage:hover {
+  transform: scale(1.02);
+}
+
+.sticky-text {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.6s ease;
+  background-color: #ffcaca;
+  padding: 20px;
+}
+
+.texto {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+  width: 80%;
+  max-width: 450px;
+}
+
+.texto.active {
+  opacity: 1;
+  transform: translateY(0);
+  position: relative;
+}
+
+.textMod h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #222;
+}
+
+.textMod p {
+  font-size: 16px;
+  color: #333;
+}
+
+/* ===== RESPONSIVO ===== */
+@media (max-width: 1024px) {
+  .sticky-text h4 {
+    margin-top: 100px;
+  }
+}
+
+@media (max-width: 992px) {
+  .rowLineas {
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .col-imgs, .sticky-text {
+    width: 100%;
+    position: relative;
+    height: auto;
+  }
+
+  .sticky-text {
+    background-color: transparent;
+  }
+
+  .responsive-pair {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 60px;
+  }
+
+  /* Imágenes uniformes en tablet/móvil grande */
+  .responsive-pair img {
+    width: 85vw !important;
+    max-width: 85vw !important;
+    aspect-ratio: 3/4 !important;
+    height: auto !important;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
+
+  .responsive-pair .texto {
+    opacity: 1 !important;
+    transform: none;
+    position: relative;
+    text-align: center;
+  }
+}
+
+/* Asegura que en modo móvil los textos se muestren correctamente */
+.texto.mobile {
+  position: relative !important;
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* Estilo parejas en móvil */
+.responsive-pair {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 20px;
+  margin-bottom: 30px;
+}
+
+/* Tamaño uniforme de imágenes - DESKTOP */
+.rowLineas .LargeImage {
+  width: 100%;
+  max-width: 33vw;
+  height: auto;
+  aspect-ratio: 3/4;
+  object-fit: cover;
+  border-radius: 1rem;
+  margin-bottom: 4vh;
+}
+
+/* Section wrapper para las imágenes */
+.section {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Primera imagen un poco más abajo */
+.rowLineas .LargeImage:first-child {
+  margin-top: 5vh;
+}
+
+/* === Ajustes de texto dentro del sticky === */
+.textMod {
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+  text-align: justify;
+  padding: 1rem;
+}
+
+/* Titulares ordenados y con jerarquía visual */
+.textMod h4 {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: #5e2d12;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.textMod h2 {
+  font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+  color: #222;
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+}
+
+.textMod h3 {
+  font-size: clamp(1rem, 1.8vw, 1.3rem);
+  color: #333;
+  font-weight: 500;
+  margin-top: 1rem;
+  margin-bottom: 0.6rem;
+}
+
+.textMod p, .textMod li {
+  font-size: clamp(0.9rem, 1.5vw, 1rem);
+  color: #444;
+}
+
+/* Espaciado interno y orden en listas */
+.textMod ul {
+  padding-left: 1.2rem;
+  margin-top: 0.6rem;
+  margin-bottom: 0;
+}
+
+.textMod li {
+  margin-bottom: 0.4rem;
+  text-align: left;
+}
+
+/* === VERSIÓN RESPONSIVA MOVIL === */
+@media (max-width: 768px) {
+  .rowLineas {
+    padding: 4vh 5vw;
+    background-color: #fff7f7;
+  }
+
+  /* TAMAÑO FIJO Y UNIFORME PARA TODAS LAS IMÁGENES EN MÓVIL */
+  .rowLineas .LargeImage {
+    max-width: 85vw !important;
+    width: 85vw !important;
+    aspect-ratio: 3/4 !important;
+    margin-bottom: 3vh;
+    height: auto !important;
+  }
+
+  .rowLineas .LargeImage:first-child {
+    margin-top: 7vh;
+  }
+
+  .textMod {
+    text-align: left;
+    padding: 1rem 1.2rem;
+    background-color: #fff7f7;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+
+  .textMod h2, .textMod h3, .textMod h4 {
+    text-align: center;
+  }
+
+  .textMod ul {
+    padding-left: 1rem;
+  }
+
+  .textMod li {
+    line-height: 1.4;
+  }
+}
+
+/* === Ajuste adicional para pantallas grandes === */
+@media (min-width: 1600px) {
+  .rowLineas .LargeImage {
+    max-width: 28vw;
+  }
+}

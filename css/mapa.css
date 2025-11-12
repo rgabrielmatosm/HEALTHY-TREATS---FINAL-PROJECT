@@ -1,0 +1,26 @@
+body, html {
+  margin-top: 30px;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  margin-top: 60px;
+}
+
+#map { 
+    height: 300px; 
+    border-radius: 10px; 
+}
+.logo {
+    width: 40px;
+    height: 40px;
+}
+@media (max-width: 576px) {
+    .logo {
+      width: 30px;
+      height: 30px;
+    }
+}
+
+.barracolor{
+    background-color: rgb(201, 163, 78);
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
